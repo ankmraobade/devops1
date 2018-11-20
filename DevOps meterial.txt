@@ -1,0 +1,441 @@
+***************************************************DevOps******************************************************
+
+DevOps: it is a process  and methodology of continuos learnig and improvements.
+
+*Devops is made of mergeing of two words.
+
+  1.Developmet.
+  2.Operation.
+              both the team has different responsibilities in the application release management cycle.
+*it is more related to communication,collaboration,feedback between different statkeholders such as Developers ,
+Testers,infrastructures team,configaration mnagement team,,deployment tem.
+
+*Devops does not just mean Dev&ops but it is a collaboration of Different team working to gether to give quality,
+cost,efficient and productive results.
+*DevOps is culture which promotes collaboration between Development and Operation Team to to deploy code to production 
+faster in an automated &repeatable way.
+
+why DevOps:
+
+automate the process,reduce the manual activities.
+
+*activities in Development:
+-->analysis/planning/requirement
+-->code management
+-->build
+-->test
+-->release
+
+**activities in Operation:
+-->Environment setup
+-->deploy
+-->testing in various higher env
+supporting Tools: aws,ansible,docker,splunck,nagios.
+
+-->DevOps includes different Sub concepts/Phases:
+*continuos integrtaion: it is more of a culture of integration applicatiion code or source code into
+ source repositories
+*continuos Testing:Automated Testing or Unit Testing to be more precise.
+*continuos provisioning or cloud provisioning:virtual machines or cloud instances are highly available,flexible 
+and pay user use.
+*configaration management:it is a process of remotely configure and deploy no of servers using cm Tools
+*CI/CD:cicd is term which used loosely in day to day use.
+***************************************************Ansible*****************************************************
+Ansible: ansible is an austomation engine that automates sw provisoning,configartion management and 
+application Deployment.
+*configaration mgt systems are designed to make controlling large no of server easy for administrator
+ and operation teams.
+*they allow u to control many Diffrent sysyem in an automated way from one central location is called orchestration.
+*Ansible is a radically simple IT automation platform that makes your application and system easier to deploy.
+why Ansible: it uses a ssh operation
+*agentless.
+*python and yaml based
+*system requirement is very low.
+*light weight and quick deploy
+*execute task on multiople systems at the same time.
+what is configaration manegement tool:
+*package installation
+*application installation
+*configaration of servers.
+*contiuos testing of already install application
+*automation of task
+*orchestration
+*
+ansible module:
+modules are the ones that do the actual work in ansible ,they are what gets executed in each playbook,task,
+.but u can also run a single one in each playbook task
+* ansible fundmental units----->(modules):apt,yum,service,copy,raw.
+* puppet fundmental units:resources
+* cheff fundmental units:recipes
+
+modules:
+ad-hoc commands:then there.it will do the quick task but does not save.
+
+ansible programs:
+copy module:
+- hosts: ankm
+  remote_user: root
+  gather_facts: false
+  tasks:
+   - name: to update repo
+     raw: apt-get update
+   - name: to install apache
+     apt: name=apache2 state=latest
+   - name: to deploy files
+     copy:
+      src: /root/files/index.html
+      dest: /var/www/html/index.html
+   - name: to start services
+     service: name=apache2 state=running
+
+ansible -variables:
+
+- hosts: ankm
+  become: true
+  vars:
+     - pack1:wget
+     - pack2:curl
+  tasks:
+   - name: to install{{pack1}}
+     raw: apt-get update
+   - name: to install apache
+     apt: name=apache2 state=latest
+   - name: to deploy files
+     copy:
+      src: /root/files/index.html
+      dest: /var/www/html/index.html
+   - name: to start services
+     service: name=apache2 state=running
+
+- hosts: all
+  vars:
+    hello:
+      - World
+      - Asia
+      - South America
+      - North America
+      - Artic
+      - Antartic
+      - Oceania
+      - Europe
+      - Africa
+  tasks:
+  - name: Ansible List variable Example
+    debug:
+      msg: "{{ hello[2] }}"
+
+
+
+******************************************************Docker****************************************************
+Docker: Docker is a Container management tool,To create a light weight instances,like servers,virtual machines.
+
+Vitulization: Virtulization means To run multiple os on single os physical system .
+
+*In Virtulization every vm is Independent
+
+*To setup vm hypervisor required.
+*Every vm has different credentials
+*For Ruinning an Application u need a vm
+*if we setup multiple vms for an application.we need multiple isolation vm's  space wasted and high cost.
+
+*Container management Tool:
+
+**Container management is thin virtualization.here container mean vm.Container has only application,
+it will take the required files from host os.container has no os .it will use the kerner of host os.
+*fast performing
+*it doesnot have any os.
+
+       Virtualization						Docker
+---------------------------------------------------------------------------------------------------  
+      *isolation os.					*isolation container.
+      *space is wasted                                  *space is not wasted 
+      *every file is not installed                      *required bin/lib files only installed,
+                                                         remain files share from host os.
+
+      *take time to boot.				*take less time to boot.
+      *take time to restart vm.				*take very less time to restart container.
+
+----------------------------------------------------------------------------------------------------
+
+*Docker is an open platform for Developing ,shipping,and running application.
+*Docker enable u to seperate u r application from u r infrastructure socan Deliver software quickly.
+*With Docker u can manage u r infrastructure in the same way u manage u r application.
+*Docker provides the ability to package and run application in loosly isolated envoronment called a Container.
+*The isolaton and security allow u to run many container simultaneously on given host.container are light weight 
+because they do't need the extra load of hypervisor,but run directly with in the hpost mechines kernel.
+
+components of Docker:
+
+*Docker for MAC:To run Docker containers on the mac
+*Docker for linux:To run Docker containers on the linux
+*Docker for windows:To run Docker containers on the windows
+*Docker Engine:It is used for Building Docker images and creating Docker containers.
+*Docker Hub:This is the registry which is used to host various docker images.
+*Docker Compose:single application can handle multiple application is called docker compose.
+this is used to define applications using multiple docker containers.
+
+****************************************************DOCKER IMGAES***********************************************
+In Docker,everything is Based on Images.An Imge is a combination of files system and parameter.
+
+let's take an example of the following command in Docker.
+        $docker run hello-world
+	$Docker run centos -it /bin/bash
+        centos is the name of the image we want to download from Docker Hub and install on our Ubuntu machine.
+The following command display the list of images.
+$docker images
+each iamge has four attributes
+*TaG
+*ImagrId
+*created
+*Virtualsize.
+
+downloading Docker image: images can be downloaded from Docker hub using the Docker pull command
+
+syntax:the following syntax is used to run a command in docker container.
+$docker run imagename
+$docker rmi imageid to remove the images.
+
+
+*DOCKER images is built up from the a series of layers.
+each layer represents an instruction in the images Docker file.
+Dockr image is collection files and some metadata.
+images are made up of layers conceptually stacked on top of each other.
+
+docker images commands:
+$docker images
+$docker pull
+$docker run
+$docker push
+
+*an Image is readonly template with instruction for creating Docker container.
+*Docker can build images automatically by reading the instructions from  a Docker.
+*A single image can be used to create multiple containers.
+
+
+************************************************DOCKER CONTAINER***********************************************
+DOCKER CONTAINER: Docker container is running instance of an image.
+		  u can use cli commands start,stop,move,delete the container.
+docker containers is an isolated and secure application platform,
+but it can share and access to resources running in different host or container.
+Docker container is an isolated 
+features:
+	1.light weight.
+	2.less Resources are used.
+	3.Booting of containers is very fast.
+	4.can start,kill,remove containers easily&quickly.
+	5.os resources can be shared with in Docker.
+
+$docker run helloworld
+
+*docker:it is the engine and used to run docker program.
+	it tells to the the os that u are running docker program.
+*run:this sub command is used to create and run a dockere container.
+*hello-world:It is  name of an image,u need to specify the name of an image which is to l;oad into container.
+	     Docker engine provides the core Docker technology that enables imges &containers.
+
+***************************************************** DOCKERFILE *****************************************************
+*A DOCKER IMAGE is describe in text file called dockerfile.
+*which has simple,well defined syntax an image does not has states and never changes.
+steps to create dockerfile:
+
+step:1 create a file name Dockerfile.
+step:2 add instruction to docker file.
+step:3 build docker file to create docker file.
+step:4 Run image to create container.
+getting image to create container.
+
+
+*******************************************Docker volumes****************************************************
+volumes are prefered mechanisim for persisting data generated by and used bydocker containers.
+share volume(storeage/data)amoong different containers.
+attach volume to the containers.
+on deleting conainers volume does not delete.
+volumes are useful for backeps,restore&migration.
+volume work on both linux and containers.
+
+docker -V  (docker version is display)
+*docker volume
+*docker volume create
+*docker volume ls
+*docker volume inspect
+*docker volume rm
+*docker volume prune
+
+
+
+
+
+***************************************************DOCKER COMPOSE********************************************************
+Docker Compose:single application can handle multiple application is called docker compose.
+this is used to define applications using multiple docker containers.
+*USE YML FILE to configure application services.
+
+docker compose install & working
+step 1:
+$install docker compose
+
+step2:create docker copose file at any location on your system.
+$dockre-compose.yml
+
+step3:check the validity of the file by command.
+$docker-compose config
+
+step:4
+*can start all services with single command.
+run docker-compose.yml file by command
+$dokcer-compose up.
+
+step5:bring down application by command
+**can stop all services with single command.
+$dokcer-compose down.
+
+can scale up selected services when required.
+
+
+********************************************** Docker swarm *****************************************************
+Docker swarm is a cluster of docker Engines.
+Docker swarm is Tool for container Orchestration 
+Let's take an Example.
+we need 100 containers.
+-->health check on every container
+-->ensure all aontainer are up on every system.
+-->scaling the container up & down depending on the load.
+-->adding updates/changes to all the containers.
+
+*A swarm is a group of machines that are running docker and joined into cluster 
+a cluster is managed by swarm manager.
+
+
+to install Docker:
+#curl -fsfl https://test.docker.com | sh
+to create docker swarm:
+$docker swarm init 
+#docker swarm init s --listen -addr current node ip:2377
+
+To add docker swarm manager:
+*docker swarm join token manager
+#docker node list(it will run only swarm)
+#docker info
+to leave swarm:
+$docker swarm leave
+$docker swarm leave --force(just leave the swarm forcefully)
+
+to manager docker services:
+mgr$docker service ls
+mgr#docker service create --replicas3 --name demo nginx (creative a service)
+for webserver nginx:
+mgr$docker service creates -p 80:80 --name webserver nginx
+$docker service ls
+$docker service scale webserver=3
+mgr$netstat -lntp
+$docker ps
+for webserver tomcat:
+$docker service scale appserver=3 (no off nodes installed)
+$docker service create -p 8080:8080 --name appserver tomcat :8.0:
+$docker service ls
+go to node1
+$node1
+check it $docker ps
+go to node2
+$node2
+check it $docker ps
+
+to promote /demote a node to mgr:
+$docker node promote <docker node id>
+$docker node list
+$reboot(manager)
+$docker node ls
+$dokcer node demote <nodeid>
+
+to inspect services:
+$docker service ls
+$docker service inspect serviceid
+$docker service rm serviceid(to remove service)
+************************************************Docker networks***********************************************
+
+
+
+==============================================================================================================
+
+************************************************JENKINS*****************************************************
+JENKINS:jENKINS is an opensource tool written in java with plugin  built for continuos integration purpose.
+	it is aci/cd Tool.
+CI/CD:ci means integrate the Developers code ,cd means Delivry or Deploy 
+The code into the Different Environments(QA,PRODUCTION).
+
+*IT IS AJAVA BASED APPLICATION.
+*it will help to automate the process of code integration,code build,code delivery.
+*jenkins has origional as hudson.
+*it is a plugin based tool.
+*nearly 1000,plugins jenkins will support.
+
+ROLES OF DEVOPS ENGINEER:
+*installation and configaration.
+*plugin management
+*user management
+*security management
+*global tool management
+*creating jobs
+*monitoring jobs
+*jobs pipeline
+*integrating different tools
+*taking jenkin backup
+
+JENKINS IS an open-source DevOps testing tool.it can be used to automate all types of tasks such
+ as building,testing,and deploying software.
+*it is a powerful application that allows ci/cd projects,regard less of the platform you are woking on.
+it is a free source that can handle any kind of build or continuos integration.
+*
+
+
+
+features of jenkins:
+*provides support to scale out to large nymber of nodes and distributing the workload equally.
+*compitable with all os and version of LINUX,MAC OS AND LINUX.
+*it offers easy installation as jenkins comes as jenkins.war file.all user needs to do is to drop war into
+your JEE container and your setup ready to run.
+*jenkins can be easily setup and configured with the help of its web interface.
+
+why jenkins: jenkins is a software that allows continuos integration(CI).
+*JENKINS:JENKINS will be installed on server where the central build will take place.the following steps
+a very simple workflow of how jenkins works:
+	1.Developers check their source code.
+	2.jenkins will pick up the changed sousrse code.
+	3.it will then trigger the build and run any test if required.
+	4.the build output will be availbe in jenkins dshboard.
+	5.Automatic notification can also be sent back to developer.
+
+**plugin management:plugin is aadditional software.it will help to interact with other systems under  plugin management.
+we can install ,update,remove the plugin.
+Globaltool management:these are tools it will help develop the application like maven.
+difference between tool and plugin:tool can maintain multiple versions but we can maintain
+ only single version of plugin.
+$manage jenkins --global tool configrations
+
+Job management: Job means task,to build integration,delivery thses kind pf task we can handle in jenkins job
+management.
+Job is a core part of the jenkins.job will pull the code from scm server.
+build the application if successfully build delivery the code.
+There are diffrent types of jobs:
+1.free style job:we can integrate any kind of data.
+2.maven job:we can integrate only java files.
+3.ms built:we can integrate only dotnet files
+3.pipeline job: sequence of jobs ,one job is connectedto anotther job.
+4.multipipeline job:
+
+how to schedule job in jenkins:
+*get the code from server(gitbucket)
+*setting trigger
+*setup buil;d environment
+*build action
+*post build action 
+
+
+
+
+
+
+
+
+
+
